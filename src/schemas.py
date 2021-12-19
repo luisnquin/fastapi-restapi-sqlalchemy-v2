@@ -3,37 +3,35 @@ from datetime import datetime
 from typing import Optional
 
 
-class Groups(BaseModel):
+class GroupSchema(BaseModel):
     group_id:Optional[int]
     name:str
 
 
-class Teachers(BaseModel):
-    teacher_id:Optional[int]
-    firstname:str
-    lastname:str
-    group:Groups
-
-
-class Students(BaseModel):
-    student_id:Optional[int]
+class TeachersSchema(BaseModel):
     firstname:str
     lastname:str
 
 
-class Subjects(BaseModel):
+class StudentsSchema(BaseModel):
+    firstname:str
+    lastname:str
+    group:int
+
+
+class SubjectsSchema(BaseModel):
     subject_id:Optional[int]
     title:str
 
 
 class SubjectTeacher(BaseModel):
-    subject_id:Teachers
-    teacher_id:Students
-    group_id:Groups
+    subject_id:TeachersSchema
+    teacher_id:StudentsSchema
+    group_id:GroupSchema
 
 
-class Brands(BaseModel):
+class BrandsSchema(BaseModel):
     brand_id:int
-    student:Students
-    subject:Subjects
+    student:StudentsSchema
+    subject:SubjectsSchema
     date:datetime
