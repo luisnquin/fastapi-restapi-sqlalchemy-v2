@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from constants import *
+from db.constants import *
 
 engine = create_engine(f"{DIALECT}://{USER}:{PASSWORD}@{HOST}/{NAME}")
 Session = sessionmaker(engine)
