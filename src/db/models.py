@@ -21,7 +21,7 @@ class StudentsModel(Base):
     id = Column(Integer(), primary_key=True, autoincrement=True, unique=True)
     firstname = Column(String(length=50), nullable=False)
     lastname = Column(String(length=60), nullable=False)
-    group_id = Column(Integer(), ForeignKey("groups.id"), nullable=False, onupdate="cascade")
+    group_id = Column(Integer(), ForeignKey("groups.id"), nullable=False)
 
 
 class GroupsModel(Base):
@@ -41,15 +41,15 @@ class SubjectsModel(Base):
 class SubjectTeacherModel(Base):
     __tablename__ = "subject_teachers"
 
-    subject_id = Column(Integer(), ForeignKey("subjects.id"), primary_key=True, nullable=False, onupdate="cascade")
-    teacher_id = Column(Integer(), ForeignKey("teachers.id"), primary_key=True, nullable=False, onupdate="cascade")
-    group_id = Column(Integer(), ForeignKey("groups.id"), primary_key=True, nullable=False, onupdate="cascade")
+    subject_id = Column(Integer(), ForeignKey("subjects.id"), primary_key=True, nullable=False)
+    teacher_id = Column(Integer(), ForeignKey("teachers.id"), primary_key=True, nullable=False)
+    group_id = Column(Integer(), ForeignKey("groups.id"), primary_key=True, nullable=False)
 
 
 class BrandsModel(Base):
     __tablename__ = "brands"
 
     brand_id = Column(Integer(), primary_key=True, autoincrement=True, nullable=False)
-    brand_student_id = Column(Integer(), ForeignKey("students.id"), primary_key=True, nullable=False, onupdate="cascade")
-    brand_subject_id = Column(Integer(), ForeignKey("subjects.id"), primary_key=True, nullable=False, onupdate="cascade")
+    brand_student_id = Column(Integer(), ForeignKey("students.id"), primary_key=True, nullable=False)
+    brand_subject_id = Column(Integer(), ForeignKey("subjects.id"), primary_key=True, nullable=False)
     brand_date = Column(Date(), nullable=False, default=datetime.now())

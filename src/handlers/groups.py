@@ -23,6 +23,15 @@ def createNewGroup(group:GroupSchema):
     return
 
 
+def createALotOfGroups(groups:ListGroupSchema):
+    for group in groups.__root__:
+        group_query = GroupsModel(name=group.name)
+        session.add(group_query)
+
+    session.commit()
+    return
+
+
 def updateGroupById(group:GroupSchema, id:int):
     session.query(GroupsModel).filter(
         GroupsModel.id == id
@@ -37,6 +46,7 @@ def updateGroupById(group:GroupSchema, id:int):
 
 def deleteGroupById(id:int):
     session.query(GroupsModel).filter(
-        GroupsModel.id == id).first().delete()
+        GroupsModel.id == id
+        ).first().delete()
     session.commit()
     return

@@ -1,9 +1,10 @@
 from fastapi import Response
 from fastapi.routing import APIRouter
+from starlette.responses import HTMLResponse
 
 from ..schemas import *
 from ..handlers.students import *
-from ..handlers.group import *
+from ..handlers.groups import *
 
 
 group_router = APIRouter()
@@ -20,12 +21,22 @@ async def getGroups():
 async def getOneGroup(id):
     group = getGroupById(id)
 
-    return group
+    if group != None:
+        return group
+
+    return HTMLResponse(status_code=404)
 
 
 @group_router.post("", tags=["Group of students"])
 async def newGroup(group:GroupSchema):
     createNewGroup(group)
+
+    return Response(status_code=201)
+
+
+@group_router.post("/many", tags=["Group of students"])
+async def aLotOfNewGroups(groups:ListGroupSchema):
+    createALotOfGroups(groups)
 
     return Response(status_code=201)
 
