@@ -1,13 +1,17 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import Optional, List
+from typing import List, Optional
 
 
 class GroupSchema(BaseModel):
     name:str
 
 
-class ListGroupSchema(BaseModel):
+class GroupSchemaOpt(BaseModel):
+    name:Optional[str]
+
+
+class GroupSchemaArray(BaseModel):
     __root__: List[GroupSchema]
 
 
@@ -16,7 +20,12 @@ class TeacherSchema(BaseModel):
     lastname:str
 
 
-class ListTeacherSchema(BaseModel):
+class TeacherSchemaOpt(BaseModel):
+    firstname:Optional[str]
+    lastname:Optional[str]
+
+
+class TeacherSchemaArray(BaseModel):
     __root__: List[TeacherSchema]
 
 
@@ -26,7 +35,13 @@ class StudentSchema(BaseModel):
     group:int
 
 
-class ListStudentSchema(BaseModel):
+class StudentSchemaOpt(BaseModel):
+    firstname:Optional[str]
+    lastname:Optional[str]
+    group:Optional[int]
+
+
+class StudentSchemaArray(BaseModel):
     __root__: List[StudentSchema]
 
 
@@ -34,17 +49,11 @@ class SubjectSchema(BaseModel):
     title:str
 
 
-class ListSubjectSchema(BaseModel):
+class SubjectSchemaArray(BaseModel):
     __root__: List[SubjectSchema]
 
 
-class SubjectTeacher(BaseModel):
+class SubjectTeacherGroupSchema(BaseModel):
     subject_id:int
     teacher_id:int
     group_id:int
-
-
-class BrandsSchema(BaseModel):
-    student:int
-    subject:int
-    date:datetime

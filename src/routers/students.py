@@ -1,8 +1,10 @@
 from fastapi import Response
 from fastapi.routing import APIRouter
 
-from ..schemas import *
-from ..handlers.students import *
+from ..schema.schemas import StudentSchema, StudentSchemaOpt, StudentSchemaArray
+from ..handlers.students import getAllStudents, getStudentById, createNewStudent
+from ..handlers.students import createALotOfStudents, modifyStudentByid
+from ..handlers.students import updateStudentById, deleteStudentById
 
 students_router = APIRouter()
 
@@ -10,7 +12,7 @@ students_router = APIRouter()
 @students_router.get("", tags=["Students"])
 async def getStudents():
     students = getAllStudents()
-    return [student for student in students]
+    return students
 
 
 @students_router.get("/{id}", tags=["Students"])
@@ -31,10 +33,20 @@ async def newStudent(student:StudentSchema):
 
 
 @students_router.post("/many", tags=["Students"])
-async def aLotOfNewStudents(students:ListStudentSchema):
+async def aLotOfNewStudents(students:StudentSchemaArray):
     createALotOfStudents(students)
 
     return Response(status_code=201)
+
+
+@students_router.patch("/{id}", tags=["Students"])
+async def modifyStudent(student:StudentSchemaOpt, id:int):
+    err = modifyStudentByid(student, id)
+
+    if err:
+        return Response(status_code=304)
+
+    return Response(status_code=202)
 
 
 @students_router.put("/{id}", tags=["Students"])

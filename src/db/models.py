@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import *
+from sqlalchemy import Column, Integer, String, ForeignKey
 
 
 Base = declarative_base()
@@ -38,18 +38,9 @@ class SubjectsModel(Base):
     title = Column(String(length=65), nullable=False, unique=True)
 
 
-class SubjectTeacherModel(Base):
+class SubjectTeacherGroupModel(Base):
     __tablename__ = "subject_teachers"
 
     subject_id = Column(Integer(), ForeignKey("subjects.id"), primary_key=True, nullable=False)
     teacher_id = Column(Integer(), ForeignKey("teachers.id"), primary_key=True, nullable=False)
     group_id = Column(Integer(), ForeignKey("groups.id"), primary_key=True, nullable=False)
-
-
-class BrandsModel(Base):
-    __tablename__ = "brands"
-
-    brand_id = Column(Integer(), primary_key=True, autoincrement=True, nullable=False)
-    brand_student_id = Column(Integer(), ForeignKey("students.id"), primary_key=True, nullable=False)
-    brand_subject_id = Column(Integer(), ForeignKey("subjects.id"), primary_key=True, nullable=False)
-    brand_date = Column(Date(), nullable=False, default=datetime.now())
