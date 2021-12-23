@@ -27,7 +27,7 @@ def getAssociationById(id:int):
     .join(SubjectsModel, SubjectsModel.id == SubjectTeacherGroupModel.subject_id)\
     .join(TeachersModel, TeachersModel.id == SubjectTeacherGroupModel.teacher_id)\
     .join(GroupsModel, GroupsModel.id == SubjectTeacherGroupModel.group_id)\
-    .filter(SubjectTeacherGroupModel.id == id)
+    .filter_by(id=id).first() 
 
     return row
 

@@ -41,7 +41,7 @@ async def create_associations(request:AssociationSchema):
 async def create_a_lot_of_associations(request:AssociationSchemaList):
     createALotOfNewAssociations(request)
 
-    return Response(status_code=202)
+    return Response(status_code=201)
 
 
 @relations_router.patch("/associate/{id}", tags=["Relations", "Groups, Subjects and teachers"])

@@ -37,7 +37,7 @@ async def create_subject(request:SubjectSchema):
 async def create_a_lot_of_subjects(request:SubjectSchemaList):
     createALotOfSubjects(request)
 
-    return Response(status_code=202)
+    return Response(status_code=201)
 
 
 @subjects_router.patch("/{id}", tags=["Subjects"])
