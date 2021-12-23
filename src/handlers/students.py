@@ -1,5 +1,5 @@
 from ..db.connection import session
-from ..schema.schemas import StudentSchema, StudentSchemaOpt, StudentSchemaArray
+from ..schema.schemas import StudentSchema, StudentSchemaOpt, StudentSchemaList
 from ..db.models import StudentsModel
 
 
@@ -25,7 +25,7 @@ def createNewStudent(request:StudentSchema):
     return
 
 
-def createALotOfStudents(request:StudentSchemaArray):
+def createALotOfNewStudents(request:StudentSchemaList):
     for student in request.__root__:
         new_student = StudentsModel(firstname=student.firstname, lastname=student.lastname, group_id=student.group)
         session.add(new_student)
@@ -34,7 +34,7 @@ def createALotOfStudents(request:StudentSchemaArray):
     return
 
 
-def modifyStudentByid(request:StudentSchemaOpt, id:int):
+def modifyStudentById(request:StudentSchemaOpt, id:int):
     if request.firstname:
         session.query(StudentsModel)\
             .filter(StudentsModel.id == id)\

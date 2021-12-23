@@ -1,22 +1,22 @@
 from fastapi import Response
 from fastapi.routing import APIRouter
 
-from ..schema.schemas import StudentSchema, StudentSchemaOpt, StudentSchemaArray
+from ..schema.schemas import StudentSchema, StudentSchemaOpt, StudentSchemaList
 from ..handlers.students import getAllStudents, getStudentById, createNewStudent
-from ..handlers.students import createALotOfStudents, modifyStudentByid
+from ..handlers.students import createALotOfNewStudents, modifyStudentById
 from ..handlers.students import updateStudentById, deleteStudentById
 
 students_router = APIRouter()
 
 
 @students_router.get("", tags=["Students"])
-async def getStudents():
+async def get_students():
     students = getAllStudents()
     return students
 
 
 @students_router.get("/{id}", tags=["Students"])
-async def getOneStudent(id:int):
+async def get_one_student(id:int):
     student = getStudentById(id)
 
     if student != None:
@@ -26,22 +26,22 @@ async def getOneStudent(id:int):
 
 
 @students_router.post("", tags=["Students"])
-async def newStudent(student:StudentSchema):
+async def create_student(student:StudentSchema):
     createNewStudent(student)
 
     return Response(status_code=201)
 
 
 @students_router.post("/many", tags=["Students"])
-async def aLotOfNewStudents(students:StudentSchemaArray):
-    createALotOfStudents(students)
+async def create_a_lot_of_students(students:StudentSchemaList):
+    createALotOfNewStudents(students)
 
     return Response(status_code=201)
 
 
 @students_router.patch("/{id}", tags=["Students"])
-async def modifyStudent(student:StudentSchemaOpt, id:int):
-    err = modifyStudentByid(student, id)
+async def modify_student(student:StudentSchemaOpt, id:int):
+    err = modifyStudentById(student, id)
 
     if err:
         return Response(status_code=304)
@@ -50,14 +50,14 @@ async def modifyStudent(student:StudentSchemaOpt, id:int):
 
 
 @students_router.put("/{id}", tags=["Students"])
-async def updateStudent(id:int, student:StudentSchema):
+async def update_student(id:int, student:StudentSchema):
     updateStudentById(id, student)
 
     return Response(status_code=202)
 
 
 @students_router.delete("/{id}", tags=["Students"])
-async def deleteStudent(id:int):
+async def delete_student(id:int):
     deleteStudentById(id)
 
     return Response(status_code=202)

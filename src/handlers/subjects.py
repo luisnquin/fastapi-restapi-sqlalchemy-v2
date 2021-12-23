@@ -1,5 +1,5 @@
 from ..db.connection import session
-from ..schema.schemas import SubjectSchema, SubjectSchemaArray
+from ..schema.schemas import SubjectSchema, SubjectSchemaList
 from ..db.models import SubjectsModel
 
 
@@ -24,13 +24,14 @@ def createNewSubject(request:SubjectSchema):
     return
 
 
-def createALotOfSubjects(request:SubjectSchemaArray):
+def createALotOfSubjects(request:SubjectSchemaList):
     for subject in request.__root__:
         new_subject = SubjectsModel(title=subject.title)
         session.add(new_subject)
 
     session.commit()
     return
+
 
 def modifySubjectById(request:SubjectSchema, id:int):
     if request.title:

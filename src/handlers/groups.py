@@ -1,5 +1,5 @@
 from ..db.connection import session
-from ..schema.schemas import GroupSchema, GroupSchemaOpt, GroupSchemaArray
+from ..schema.schemas import GroupSchema, GroupSchemaOpt, GroupSchemaList
 from ..db.models import GroupsModel
 
 
@@ -24,7 +24,7 @@ def createNewGroup(request:GroupSchema):
     return
 
 
-def createALotOfGroups(request:GroupSchemaArray):
+def createALotOfNewGroups(request:GroupSchemaList):
     for group in request.__root__:
         new_group = GroupsModel(name=group.name)
         session.add(new_group)

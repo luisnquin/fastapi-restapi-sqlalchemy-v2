@@ -1,5 +1,5 @@
 from ..db.connection import session
-from ..schema.schemas import TeacherSchema, TeacherSchemaOpt, TeacherSchemaArray
+from ..schema.schemas import TeacherSchema, TeacherSchemaOpt, TeacherSchemaList
 from ..db.models import TeachersModel
 
 
@@ -25,7 +25,7 @@ def createNewTeacher(request:TeacherSchema):
     return
 
 
-def createALotOfTeachers(request:TeacherSchemaArray):
+def createALotOfTeachers(request:TeacherSchemaList):
     for teacher in request.__root__:
         new_teacher = TeachersModel(firstname=teacher.firstname, lastname=teacher.lastname)
         session.add(new_teacher)
@@ -33,6 +33,7 @@ def createALotOfTeachers(request:TeacherSchemaArray):
     session.commit()
 
     return
+
 
 def modifyTeacherById(request:TeacherSchemaOpt, id:int):
     if request.firstname:
